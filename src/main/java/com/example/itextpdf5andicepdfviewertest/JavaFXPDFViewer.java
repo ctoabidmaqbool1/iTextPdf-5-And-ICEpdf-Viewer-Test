@@ -16,14 +16,19 @@ import javafx.stage.Stage;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.icepdf.ri.common.ComponentKeyBinding;
 import org.icepdf.ri.common.MyAnnotationCallback;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
+import org.icepdf.ri.util.FontPropertiesManager;
 
 public class JavaFXPDFViewer extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        // read/store the font cache, just needs to be called once when your app loads.
+        FontPropertiesManager.getInstance().loadOrReadSystemFonts();
+
         Button btn = new Button();
         btn.setText("Generate PDF and Open in Viewer");
         btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -70,19 +75,24 @@ public class JavaFXPDFViewer extends Application {
         // Create a SwingController
         SwingController controller = new SwingController();
 
-        // Build a viewer component
-        SwingViewBuilder factory = new SwingViewBuilder(controller);
-
-        InputStream is = new ByteArrayInputStream(outputStream.toByteArray());
-        controller.openDocument(is, "", "");
-        controller.setIsEmbeddedComponent(true);
-
         // Create the viewer as a JPanel
         controller.getDocumentViewController().setAnnotationCallback(
                 new MyAnnotationCallback(controller.getDocumentViewController())
         );
 
+        InputStream is = new ByteArrayInputStream(outputStream.toByteArray());
+        controller.openDocument(is, "", "\\test.pdf");
+        controller.setIsEmbeddedComponent(true);
+
+        // Build a viewer component
+        SwingViewBuilder factory = new SwingViewBuilder(controller);
+
         JPanel viewerComponentPanel = factory.buildViewerPanel();
+
+        ComponentKeyBinding.install(controller, viewerComponentPanel);
+
+        // add copy keyboard command
+        ComponentKeyBinding.install(controller, viewerComponentPanel);
 
         // Create JFrame to contain the viewer
         JFrame viewerFrame = new JFrame();
