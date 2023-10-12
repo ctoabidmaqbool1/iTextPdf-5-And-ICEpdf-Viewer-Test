@@ -1,8 +1,6 @@
 package com.example.itextpdf5andicepdfviewertest;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import java.io.*;
 import javax.swing.*;
 
 import javafx.application.Application;
@@ -13,9 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 import org.icepdf.ri.common.ComponentKeyBinding;
 import org.icepdf.ri.common.MyAnnotationCallback;
 import org.icepdf.ri.common.SwingController;
@@ -59,15 +56,53 @@ public class JavaFXPDFViewer extends Application {
 
         Document document = new Document();
         try {
-            PdfWriter.getInstance(document, outputStream);
+            PdfWriter pdfWriter = PdfWriter.getInstance(document, outputStream);
+
             document.open();
-            document.add(new Paragraph("Hello World"));
+
+            Paragraph p = new Paragraph("Hello World");
+            p.setPaddingTop(200);
+
+            for (int i = 0; i < 1000; i++) {
+                document.add(p);
+            }
+
             document.close();
+
+            // Create a reader
+            PdfReader reader = new PdfReader(outputStream.toByteArray());
+
+            // Create a stamper
+            PdfStamper stamper = new PdfStamper(reader, outputStream);
+
+            // Loop over the pages and add a header to each page
+            int n = reader.getNumberOfPages();
+            for (int i = 1; i <= n; i++) {
+                getHeaderTable(i, n).writeSelectedRows(
+                        0, -1, 34, 803, stamper.getOverContent(i)
+                );
+            }
+
+            // Close the stamper
+            stamper.close();
+            reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return outputStream;
+    }
+
+    public static PdfPTable getHeaderTable(int x, int y) {
+        PdfPTable table = new PdfPTable(2);
+        table.setTotalWidth(527);
+        table.setLockedWidth(true);
+        table.getDefaultCell().setFixedHeight(20);
+        table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+        table.addCell("FOOBAR FILMFESTIVAL");
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
+        table.addCell(String.format("Page %d of %d", x, y));
+        return table;
     }
 
     // Open the generated PDF in the icepdf-viewer
