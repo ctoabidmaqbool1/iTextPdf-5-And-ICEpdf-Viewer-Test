@@ -56,7 +56,7 @@ public class JavaFXPDFViewer extends Application {
 
         Document document = new Document();
         try {
-            PdfWriter pdfWriter = PdfWriter.getInstance(document, outputStream);
+            PdfWriter.getInstance(document, outputStream);
 
             document.open();
 
@@ -68,11 +68,13 @@ public class JavaFXPDFViewer extends Application {
             }
 
             document.close();
+            outputStream.close();
 
             // Create a reader
             PdfReader reader = new PdfReader(outputStream.toByteArray());
 
-            // Create a stamper
+            // Create a stamper with a new OutputStream
+            outputStream = new ByteArrayOutputStream();
             PdfStamper stamper = new PdfStamper(reader, outputStream);
 
             // Loop over the pages and add a header to each page
@@ -86,6 +88,7 @@ public class JavaFXPDFViewer extends Application {
             // Close the stamper
             stamper.close();
             reader.close();
+            outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
