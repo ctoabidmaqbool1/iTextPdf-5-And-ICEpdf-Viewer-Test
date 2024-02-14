@@ -2,8 +2,8 @@ plugins {
     id 'java'
     id 'application'
     id 'org.javamodularity.moduleplugin' version '1.8.12'
-    id 'org.openjfx.javafxplugin' version '0.0.13'
-    id 'org.beryx.jlink' version '2.25.0'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'org.beryx.jlink' version '2.26.0'
 }
 
 group 'com.example'
@@ -14,7 +14,7 @@ repositories {
 }
 
 ext {
-    junitVersion = '5.9.2'
+    junitVersion = '5.10.2'
 }
 
 sourceCompatibility = '17'
@@ -30,21 +30,21 @@ application {
 }
 
 javafx {
-    version = '17.0.6'
+    version = '17.0.10'
     modules = ['javafx.controls', 'javafx.fxml']
 }
 
 dependencies {
     implementation 'com.itextpdf:itextpdf:5.5.13.3'
-    implementation 'com.github.pcorless.icepdf:icepdf-core:7.1.3'
-    implementation 'com.github.pcorless.icepdf:icepdf-viewer:7.1.3'
+    implementation 'com.github.pcorless.icepdf:icepdf-core:7.1.4'
+    implementation 'com.github.pcorless.icepdf:icepdf-viewer:7.1.4'
 
     implementation 'com.itextpdf:itextpdf:5.5.13.3:javadoc'
     implementation 'com.itextpdf:itextpdf:5.5.13.3:sources'
-    implementation 'com.github.pcorless.icepdf:icepdf-core:7.1.3:javadoc'
-    implementation 'com.github.pcorless.icepdf:icepdf-core:7.1.3:sources'
-    implementation 'com.github.pcorless.icepdf:icepdf-viewer:7.1.3:sources'
-    implementation 'com.github.pcorless.icepdf:icepdf-viewer:7.1.3:javadoc'
+    implementation 'com.github.pcorless.icepdf:icepdf-core:7.1.4:javadoc'
+    implementation 'com.github.pcorless.icepdf:icepdf-core:7.1.4:sources'
+    implementation 'com.github.pcorless.icepdf:icepdf-viewer:7.1.4:sources'
+    implementation 'com.github.pcorless.icepdf:icepdf-viewer:7.1.4:javadoc'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
