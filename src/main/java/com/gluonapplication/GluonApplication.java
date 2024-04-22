@@ -1,25 +1,24 @@
-package com.example.itextpdf5andicepdfviewertest;
+package com.gluonapplication;
 
-import java.io.*;
-import javax.swing.*;
-
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
 import org.icepdf.ri.common.ComponentKeyBinding;
 import org.icepdf.ri.common.MyAnnotationCallback;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
 import org.icepdf.ri.util.FontPropertiesManager;
 
-public class JavaFXPDFViewer extends Application {
+import javax.swing.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+
+public class GluonApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) {
@@ -28,16 +27,12 @@ public class JavaFXPDFViewer extends Application {
 
         Button btn = new Button();
         btn.setText("Generate PDF and Open in Viewer");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        btn.setOnAction(event -> {
+            // Step 1: Generate iTextPDF 5 "Hello World" report in memory
+            ByteArrayOutputStream outputStream = generateHelloWorldReport();
 
-            @Override
-            public void handle(ActionEvent event) {
-                // Step 1: Generate iTextPDF 5 "Hello World" report in memory
-                ByteArrayOutputStream outputStream = generateHelloWorldReport();
-
-                // Step 2: Open the generated PDF in the icepdf-viewer
-                openPdfInViewer(outputStream);
-            }
+            // Step 2: Open the generated PDF in the icepdf-viewer
+            openPdfInViewer(outputStream);
         });
 
         StackPane root = new StackPane();

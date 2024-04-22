@@ -1,1 +1,9 @@
-rootProject.name = "iTextPdf-5-And-ICEpdf-Viewer-Test"
+pluginManagement {
+    repositories {
+        mavenLocal()
+        maven {
+            url "https://nexus.gluonhq.com/nexus/content/repositories/releases"
+        }
+        gradlePluginPortal()
+    }
+}
