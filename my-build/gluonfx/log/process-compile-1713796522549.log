@@ -1,0 +1,45 @@
+Process
+=======
+compile
+
+Command Line
+============
+D:\Programs\graalvm-svm-java17-windows-gluon-22.1.0.1-Final\bin\native-image.cmd "-Djdk.internal.lambda.eagerlyInitialize=false" --no-server -H:+SharedLibrary -H:+AddAllCharsets -H:+ReportExceptionStackTraces -H:-DeadlockWatchdogExitOnTimeout "-H:DeadlockWatchdogInterval=0" -H:+RemoveSaturatedTypeFlows -H:+ExitAfterRelocatableImageWrite "--features=org.graalvm.home.HomeFinderFeature" "-H:TempDirectory=D:\NetBeansProjects\temporay working\iTextPdf-5-And-ICEpdf-Viewer-Test\build\gluonfx\x86_64-windows\gvm\tmp" "-H:EnableURLProtocols=http,https" "-H:ReflectionConfigurationFiles=D:\NetBeansProjects\temporay working\iTextPdf-5-And-ICEpdf-Viewer-Test\build\gluonfx\x86_64-windows\gvm\reflectionconfig-x86_64-windows.json" "-H:JNIConfigurationFiles=D:\NetBeansProjects\temporay working\iTextPdf-5-And-ICEpdf-Viewer-Test\build\gluonfx\x86_64-windows\gvm\jniconfig-x86_64-windows.json" "-H:ResourceConfigurationFiles=D:\NetBeansProjects\temporay working\iTextPdf-5-And-ICEpdf-Viewer-Test\build\gluonfx\x86_64-windows\gvm\resourceconfig-x86_64-windows.json" "-H:IncludeResourceBundles=com/sun/javafx/scene/control/skin/resources/controls,com/sun/javafx/scene/control/skin/resources/controls-nt,com.sun.javafx.tk.quantum.QuantumMessagesBundle,com/sun/glass/ui/win/themes" "-Dsvm.platform=org.graalvm.nativeimage.Platform$WINDOWS_AMD64" -cp "D:\.my-gradle\caches\jars-9\7637a7ec258c8a88ce09ed96152bedfb\substrate-0.0.61.jar;D:\NetBeansProjects\temporay working\iTextPdf-5-And-ICEpdf-Viewer-Test\build\gluonfx\x86_64-windows\gvm\tmp\classpathJar.jar" com.gluonapplication.GluonApplicationRunner
+
+Output
+======
+Warning: Ignoring server-mode native-image argument --no-server.
+========================================================================================================================
+GraalVM Native Image: Generating 'com.gluonapplication.gluonapplicationrunner' (shared library)...
+========================================================================================================================
+[1/7] Initializing...                                                                                   (14.0s @ 0.31GB)
+ Version info: 'GraalVM 22.1.0.1 Java 17 CE'
+ C compiler: cl.exe (microsoft, x64, 19.39.33523)
+ Garbage collector: Serial GC
+[2/7] Performing analysis...  [***********]                                                            (245.3s @ 4.02GB)
+  19,085 (93.50%) of 20,412 classes reachable
+  42,062 (72.24%) of 58,226 fields reachable
+ 101,741 (67.92%) of 149,798 methods reachable
+     833 classes,   925 fields, and 2,430 methods registered for reflection
+     257 classes,   370 fields, and   313 methods registered for JNI access
+[3/7] Building universe...                                                                              (12.8s @ 4.09GB)
+[4/7] Parsing methods...      [***]                                                                     (11.3s @ 4.52GB)
+[5/7] Inlining methods...     [*****]                                                                   (27.2s @ 2.22GB)
+[6/7] Compiling methods...    [************]                                                           (156.9s @ 3.98GB)
+
+------------------------------------------------------------------------------------------------------------------------
+                       96.9s (19.4% of total time) in 79 GCs | Peak RSS: 11.21GB | CPU load: 3.04
+------------------------------------------------------------------------------------------------------------------------
+Produced artifacts:
+ D:\NetBeansProjects\temporay working\iTextPdf-5-And-ICEpdf-Viewer-Test\build\gluonfx\x86_64-windows\gvm\iTextPdf-5-And-ICEpdf-Viewer-Test\com.gluonapplication.gluonapplicationrunner.h (header)
+ D:\NetBeansProjects\temporay working\iTextPdf-5-And-ICEpdf-Viewer-Test\build\gluonfx\x86_64-windows\gvm\iTextPdf-5-And-ICEpdf-Viewer-Test\graal_isolate.h (header)
+ D:\NetBeansProjects\temporay working\iTextPdf-5-And-ICEpdf-Viewer-Test\build\gluonfx\x86_64-windows\gvm\iTextPdf-5-And-ICEpdf-Viewer-Test\com.gluonapplication.gluonapplicationrunner_dynamic.h (header)
+ D:\NetBeansProjects\temporay working\iTextPdf-5-And-ICEpdf-Viewer-Test\build\gluonfx\x86_64-windows\gvm\iTextPdf-5-And-ICEpdf-Viewer-Test\graal_isolate_dynamic.h (header)
+ D:\NetBeansProjects\temporay working\iTextPdf-5-And-ICEpdf-Viewer-Test\build\gluonfx\x86_64-windows\gvm\iTextPdf-5-And-ICEpdf-Viewer-Test\com.gluonapplication.gluonapplicationrunner.build_artifacts.txt
+========================================================================================================================
+Finished generating 'com.gluonapplication.gluonapplicationrunner' in 8m 18s.
+
+
+Result
+======
+result: 0
