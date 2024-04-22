@@ -68,7 +68,6 @@ public class JavaFXPDFViewer extends Application {
             }
 
             document.close();
-            outputStream.close();
 
             // Create a reader
             PdfReader reader = new PdfReader(outputStream.toByteArray());
