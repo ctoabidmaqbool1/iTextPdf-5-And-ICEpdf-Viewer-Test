@@ -3,6 +3,7 @@ package com.gluonapplication;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -14,6 +15,8 @@ import org.icepdf.ri.common.SwingViewBuilder;
 import org.icepdf.ri.util.FontPropertiesManager;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -121,13 +124,20 @@ public class GluonApplication extends Application {
 
         JPanel viewerComponentPanel = factory.buildViewerPanel();
 
-        ComponentKeyBinding.install(controller, viewerComponentPanel);
-
         // add copy keyboard command
         ComponentKeyBinding.install(controller, viewerComponentPanel);
 
         // Create JFrame to contain the viewer
         JFrame viewerFrame = new JFrame();
+
+        viewerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose JFrame on close
+        viewerFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                viewerFrame.dispose(); // Dispose JFrame on window closing
+            }
+        });
+
         viewerFrame.getContentPane().add(viewerComponentPanel);
         viewerFrame.pack();
         viewerFrame.setVisible(true);
