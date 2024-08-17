@@ -3,7 +3,6 @@ package com.gluonapplication;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -19,9 +18,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 
 public class GluonApplication extends Application {
+
+//    static {
+//        System.setProperty("java.home", "D:\\Programs\\graalvm-jdk-22_windows-x64_bin");
+//    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -31,6 +35,8 @@ public class GluonApplication extends Application {
         Button btn = new Button();
         btn.setText("Generate PDF and Open in Viewer");
         btn.setOnAction(event -> {
+//            testSunBootClassPath();
+
             // Step 1: Generate iTextPDF 5 "Hello World" report in memory
             ByteArrayOutputStream outputStream = generateHelloWorldReport();
 
@@ -92,6 +98,12 @@ public class GluonApplication extends Application {
 
         return outputStream;
     }
+
+//    private void testSunBootClassPath() {
+//        String ret = System.getProperty("java.home");
+//        File path = new File(ret);
+//        System.out.println(path.getAbsolutePath());
+//    }
 
     public static PdfPTable getHeaderTable(int x, int y) {
         PdfPTable table = new PdfPTable(2);
