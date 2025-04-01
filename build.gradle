@@ -1,7 +1,7 @@
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
-    id 'com.gluonhq.gluonfx-gradle-plugin' version '1.0.23'
+    id 'com.gluonhq.gluonfx-gradle-plugin' version '1.0.26'
 }
 
 repositories {
@@ -20,12 +20,12 @@ tasks.withType(JavaCompile) {
 
 dependencies {
     implementation 'com.itextpdf:itextpdf:5.5.13.4'
-    implementation 'com.github.pcorless.icepdf:icepdf-core:7.2.1'
-    implementation 'com.github.pcorless.icepdf:icepdf-viewer:7.2.1'
+    implementation 'com.github.pcorless.icepdf:icepdf-core:7.2.3'
+    implementation 'com.github.pcorless.icepdf:icepdf-viewer:7.2.3'
 }
 
 javafx {
-    version = '22.0.2'
+    version = '17.0.14'
     modules = ['javafx.controls']
 }
 
@@ -33,12 +33,12 @@ gluonfx {
     // target = 'android' // Uncomment to enable Android
     appIdentifier = 'com.gluonapplication.GluonApplicationRunner';
 
-    compilerArgs = ["--allow-incomplete-classpath", "--no-fallback", "-H:+GenerateBuildArtifactsFile"] // nativeImageArgs maven name
+    compilerArgs = ["--allow-incomplete-classpath", "--no-fallback"/*, "-H:+GenerateBuildArtifactsFile"*/] // nativeImageArgs maven name
     linkerArgs = []
     runtimeArgs = []
 
     attachConfig {
-        version = "4.0.21"
+        version = "4.0.22"
         services 'display', 'lifecycle', 'statusbar', 'storage'
     }
 }

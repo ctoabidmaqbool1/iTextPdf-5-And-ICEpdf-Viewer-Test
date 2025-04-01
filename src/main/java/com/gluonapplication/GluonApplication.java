@@ -58,7 +58,7 @@ public class GluonApplication extends Application {
     private ByteArrayOutputStream generateHelloWorldReport() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        Document document = new Document();
+        Document document = new Document(PageSize.A4, 36, 36, 56, 36);
         try {
             PdfWriter.getInstance(document, outputStream);
 
