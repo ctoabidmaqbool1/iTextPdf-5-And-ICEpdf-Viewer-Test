@@ -1,9 +1,9 @@
 module com.example.itextpdf5andicepdfviewertest {
+    requires itextpdf;
+    requires java.desktop;
     requires javafx.controls;
     requires javafx.fxml;
-    requires itextpdf;
-    requires icepdf.viewer;
-    requires java.desktop;
+    requires org.icepdf.ri.viewer;
 
     opens com.example.itextpdf5andicepdfviewertest to javafx.fxml;
     exports com.example.itextpdf5andicepdfviewertest;
