@@ -4,8 +4,6 @@ import java.io.*;
 import javax.swing.*;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -28,16 +26,12 @@ public class JavaFXPDFViewer extends Application {
 
         Button btn = new Button();
         btn.setText("Generate PDF and Open in Viewer");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        btn.setOnAction(event -> {
+            // Step 1: Generate iTextPDF 5 "Hello World" report in memory
+            ByteArrayOutputStream outputStream = generateHelloWorldReport();
 
-            @Override
-            public void handle(ActionEvent event) {
-                // Step 1: Generate iTextPDF 5 "Hello World" report in memory
-                ByteArrayOutputStream outputStream = generateHelloWorldReport();
-
-                // Step 2: Open the generated PDF in the icepdf-viewer
-                openPdfInViewer(outputStream);
-            }
+            // Step 2: Open the generated PDF in the icepdf-viewer
+            openPdfInViewer(outputStream);
         });
 
         StackPane root = new StackPane();
