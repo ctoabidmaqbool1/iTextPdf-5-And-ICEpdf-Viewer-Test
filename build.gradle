@@ -19,9 +19,8 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    implementation 'com.itextpdf:itextpdf:5.5.13.4'
-    implementation 'com.github.pcorless.icepdf:icepdf-core:7.2.3'
-    implementation 'com.github.pcorless.icepdf:icepdf-viewer:7.2.3'
+    implementation 'com.github.pcorless.icepdf:icepdf-core:7.2.4_P01'
+    implementation 'com.github.pcorless.icepdf:icepdf-viewer:7.2.4_P01'
 }
 
 javafx {
@@ -33,7 +32,8 @@ gluonfx {
     // target = 'android' // Uncomment to enable Android
     appIdentifier = 'com.gluonapplication.GluonApplicationRunner';
 
-    compilerArgs = ["--allow-incomplete-classpath", "--no-fallback"/*, "-H:+GenerateBuildArtifactsFile"*/] // nativeImageArgs maven name
+    compilerArgs = ["--allow-incomplete-classpath", "--no-fallback"/*, "-H:+GenerateBuildArtifactsFile"*/]
+    // nativeImageArgs maven name
     linkerArgs = []
     runtimeArgs = []
 
