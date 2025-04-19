@@ -34,7 +34,6 @@ public class JavaFXPDFViewer extends Application {
             SwingUtilities.invokeLater(() -> {
                 openPdfInViewer(outputStream);
             });
-
         });
 
         StackPane root = new StackPane();
