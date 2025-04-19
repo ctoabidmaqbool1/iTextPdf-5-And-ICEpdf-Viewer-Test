@@ -31,7 +31,9 @@ public class JavaFXPDFViewer extends Application {
             ByteArrayOutputStream outputStream = generateHelloWorldReport();
 
             // Step 2: Open the generated PDF in the icepdf-viewer
-            openPdfInViewer(outputStream);
+            SwingUtilities.invokeLater(() -> {
+                openPdfInViewer(outputStream);
+            });
         });
 
         StackPane root = new StackPane();
@@ -105,14 +107,6 @@ public class JavaFXPDFViewer extends Application {
     private void openPdfInViewer(ByteArrayOutputStream outputStream) {
         // Create a SwingController
         SwingController controller = new SwingController();
-
-        // Create the viewer as a JPanel
-        controller.getDocumentViewController().setAnnotationCallback(
-                new MyAnnotationCallback(controller.getDocumentViewController())
-        );
-
-        InputStream is = new ByteArrayInputStream(outputStream.toByteArray());
-        controller.openDocument(is, "", "\\test.pdf");
         controller.setIsEmbeddedComponent(true);
 
         // Build a viewer component
@@ -120,10 +114,19 @@ public class JavaFXPDFViewer extends Application {
 
         JPanel viewerComponentPanel = factory.buildViewerPanel();
 
+        // Create the viewer as a JPanel
+        controller.getDocumentViewController().setAnnotationCallback(
+                new MyAnnotationCallback(controller.getDocumentViewController())
+        );
+
         ComponentKeyBinding.install(controller, viewerComponentPanel);
 
         // add copy keyboard command
         ComponentKeyBinding.install(controller, viewerComponentPanel);
+
+        // open the PDF document, after the viewer is created
+        InputStream is = new ByteArrayInputStream(outputStream.toByteArray());
+        controller.openDocument(is, "", "\\test.pdf");
 
         // Create JFrame to contain the viewer
         JFrame viewerFrame = new JFrame();
