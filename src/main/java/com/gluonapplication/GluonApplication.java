@@ -36,7 +36,10 @@ public class GluonApplication extends Application {
                     Logger.getLogger(getClass().getName()).log(Level.SEVERE, "PDF file not found in resources.");
                     return;
                 }
-                openReport(inputStream);
+//                openReport(inputStream);
+                SwingUtilities.invokeLater(() -> {
+                    openReport(inputStream);
+                });
             } catch (Exception ex) {
                 Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
             }
@@ -55,22 +58,31 @@ public class GluonApplication extends Application {
      */
     private void openReport(InputStream inputStream) {
         SwingController controller = new SwingController();
+//        controller.getDocumentViewController().setAnnotationCallback(
+//                new MyAnnotationCallback(controller.getDocumentViewController())
+//        );
+
+//        controller.openDocument(inputStream, "", "Report.pdf");
+        controller.setIsEmbeddedComponent(true);
+//        controller.setPrintDefaultMediaSizeName(MediaSizeName.ISO_A4);
+
+        SwingViewBuilder factory = new SwingViewBuilder(
+                controller/*,
+                DocumentViewControllerImpl.ONE_COLUMN_VIEW,
+                DocumentViewController.PAGE_FIT_WINDOW_HEIGHT*/
+        );
+
+        JPanel viewerPanel = factory.buildViewerPanel();
+
+        // Create the viewer as a JPanel
         controller.getDocumentViewController().setAnnotationCallback(
                 new MyAnnotationCallback(controller.getDocumentViewController())
         );
 
-        controller.openDocument(inputStream, "", "Report.pdf");
-        controller.setIsEmbeddedComponent(true);
-        controller.setPrintDefaultMediaSizeName(MediaSizeName.ISO_A4);
-
-        SwingViewBuilder factory = new SwingViewBuilder(
-                controller,
-                DocumentViewControllerImpl.ONE_COLUMN_VIEW,
-                DocumentViewController.PAGE_FIT_WINDOW_HEIGHT
-        );
-
-        JPanel viewerPanel = factory.buildViewerPanel();
         ComponentKeyBinding.install(controller, viewerPanel);
+
+        // open the PDF document, after the viewer is created
+        controller.openDocument(inputStream, "", "Report.pdf");
 
         JFrame viewerFrame = new JFrame("Maqbool Solutions");
         viewerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
