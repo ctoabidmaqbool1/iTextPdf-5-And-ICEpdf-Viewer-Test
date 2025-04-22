@@ -31,18 +31,19 @@ public class GluonApplication extends Application {
 
         Button btn = new Button("Open PDF in Viewer");
         btn.setOnAction(event -> {
-            try (InputStream inputStream = getClass().getResourceAsStream("/InvoiceDetailReport-new.pdf")) {
-                if (inputStream == null) {
-                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, "PDF file not found in resources.");
-                    return;
-                }
-//                openReport(inputStream);
-                SwingUtilities.invokeLater(() -> {
+            // kicks off the work on a new thread, so the stream needs to be opened in the event thread, otherwise it
+            // be closed by the try-with-resources statement.
+            SwingUtilities.invokeLater(() -> {
+                try (InputStream inputStream = getClass().getResourceAsStream("/InvoiceDetailReport-new.pdf")) {
+                    if (inputStream == null) {
+                        Logger.getLogger(getClass().getName()).log(Level.SEVERE, "PDF file not found in resources.");
+                        return;
+                    }
                     openReport(inputStream);
-                });
-            } catch (Exception ex) {
-                Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
-            }
+                } catch (Exception ex) {
+                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+                }
+            });
         });
 
         StackPane root = new StackPane(btn);
@@ -58,18 +59,11 @@ public class GluonApplication extends Application {
      */
     private void openReport(InputStream inputStream) {
         SwingController controller = new SwingController();
-//        controller.getDocumentViewController().setAnnotationCallback(
-//                new MyAnnotationCallback(controller.getDocumentViewController())
-//        );
-
-//        controller.openDocument(inputStream, "", "Report.pdf");
         controller.setIsEmbeddedComponent(true);
-//        controller.setPrintDefaultMediaSizeName(MediaSizeName.ISO_A4);
-
         SwingViewBuilder factory = new SwingViewBuilder(
-                controller/*,
+                controller,
                 DocumentViewControllerImpl.ONE_COLUMN_VIEW,
-                DocumentViewController.PAGE_FIT_WINDOW_HEIGHT*/
+                DocumentViewController.PAGE_FIT_WINDOW_HEIGHT
         );
 
         JPanel viewerPanel = factory.buildViewerPanel();
@@ -83,6 +77,9 @@ public class GluonApplication extends Application {
 
         // open the PDF document, after the viewer is created
         controller.openDocument(inputStream, "", "Report.pdf");
+
+        // needs to be done after the document is opened,  pretty sure this can be done with the properties manager too
+        controller.setPrintDefaultMediaSizeName(MediaSizeName.ISO_A4);
 
         JFrame viewerFrame = new JFrame("Maqbool Solutions");
         viewerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
