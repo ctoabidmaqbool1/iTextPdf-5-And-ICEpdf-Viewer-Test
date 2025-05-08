@@ -12,6 +12,7 @@ import org.icepdf.ri.common.SwingViewBuilder;
 import org.icepdf.ri.common.views.DocumentViewController;
 import org.icepdf.ri.common.views.DocumentViewControllerImpl;
 import org.icepdf.ri.util.FontPropertiesManager;
+import org.icepdf.ri.util.ViewerPropertiesManager;
 
 import javax.print.attribute.standard.MediaSizeName;
 import javax.swing.*;
@@ -34,7 +35,7 @@ public class GluonApplication extends Application {
             // kicks off the work on a new thread, so the stream needs to be opened in the event thread, otherwise it
             // be closed by the try-with-resources statement.
             SwingUtilities.invokeLater(() -> {
-                try (InputStream inputStream = getClass().getResourceAsStream("/InvoiceDetailReport-new.pdf")) {
+                try (InputStream inputStream = getClass().getResourceAsStream("/MultipleInvoiceDetailReport-new.pdf")) {
                     if (inputStream == null) {
                         Logger.getLogger(getClass().getName()).log(Level.SEVERE, "PDF file not found in resources.");
                         return;
@@ -60,11 +61,11 @@ public class GluonApplication extends Application {
     private void openReport(InputStream inputStream) {
         SwingController controller = new SwingController();
         controller.setIsEmbeddedComponent(true);
-        SwingViewBuilder factory = new SwingViewBuilder(
-                controller,
-                DocumentViewControllerImpl.ONE_COLUMN_VIEW,
-                DocumentViewController.PAGE_FIT_WINDOW_HEIGHT
-        );
+
+        ViewerPropertiesManager viewerProperties = ViewerPropertiesManager.getInstance();
+        viewerProperties.getPreferences().putBoolean(ViewerPropertiesManager.PROPERTY_SEARCH_PANEL_REGEX_ENABLED, false);
+
+        SwingViewBuilder factory = new SwingViewBuilder(controller, viewerProperties);
 
         JPanel viewerPanel = factory.buildViewerPanel();
 
@@ -80,6 +81,8 @@ public class GluonApplication extends Application {
 
         // needs to be done after the document is opened,  pretty sure this can be done with the properties manager too
         controller.setPrintDefaultMediaSizeName(MediaSizeName.ISO_A4);
+        // set document view mode
+        controller.getDocumentViewController().setViewType(DocumentViewControllerImpl.ONE_COLUMN_VIEW);
 
         JFrame viewerFrame = new JFrame("Maqbool Solutions");
         viewerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
