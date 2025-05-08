@@ -8,19 +8,19 @@ repositories {
     mavenCentral()
     maven {
         url 'https://nexus.gluonhq.com/nexus/content/repositories/releases'
-}
+    }
 }
 
 mainClassName = 'com.gluonapplication.GluonApplicationRunner'
 
 tasks.withType(JavaCompile) {
-sourceCompatibility = '17'
-targetCompatibility = '17'
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
 }
 
 dependencies {
-    implementation 'com.github.pcorless.icepdf:icepdf-core:7.2.4_P01'
-    implementation 'com.github.pcorless.icepdf:icepdf-viewer:7.2.4_P01'
+    implementation 'com.github.pcorless.icepdf:icepdf-core:7.2.5'
+    implementation 'com.github.pcorless.icepdf:icepdf-viewer:7.2.5'
 }
 
 javafx {
@@ -40,7 +40,7 @@ gluonfx {
     attachConfig {
         version = "4.0.22"
         services 'display', 'lifecycle', 'statusbar', 'storage'
-}
+    }
 }
 
 //tasks.withType(JavaExec) {
