@@ -1,10 +1,21 @@
 package com.gluonapplication;
 
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+import javax.print.attribute.standard.MediaSizeName;
+import javax.swing.*;
+
 import org.icepdf.ri.common.ComponentKeyBinding;
 import org.icepdf.ri.common.MyAnnotationCallback;
 import org.icepdf.ri.common.SwingController;
@@ -13,15 +24,6 @@ import org.icepdf.ri.common.views.DocumentViewController;
 import org.icepdf.ri.common.views.DocumentViewControllerImpl;
 import org.icepdf.ri.util.FontPropertiesManager;
 import org.icepdf.ri.util.ViewerPropertiesManager;
-
-import javax.print.attribute.standard.MediaSizeName;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class GluonApplication extends Application {
 
@@ -82,7 +84,7 @@ public class GluonApplication extends Application {
         // needs to be done after the document is opened,  pretty sure this can be done with the properties manager too
         controller.setPrintDefaultMediaSizeName(MediaSizeName.ISO_A4);
         // set document view mode
-        controller.getDocumentViewController().setViewType(DocumentViewControllerImpl.ONE_COLUMN_VIEW);
+        controller.setPageViewMode(DocumentViewControllerImpl.ONE_COLUMN_VIEW, false);
 
         JFrame viewerFrame = new JFrame("Maqbool Solutions");
         viewerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
